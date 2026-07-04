@@ -5,8 +5,8 @@ const { analyzeImage } = require('../services/groq');
 // Load environment variables locally
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
-// Tiny 1x1 transparent PNG base64 representation for basic connectivity check
-const MOCK_PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=';
+// Tiny 2x2 transparent PNG base64 representation for basic connectivity check (Llama 4 requires >= 2x2 pixels)
+const MOCK_PNG_BASE64 = 'iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2M8f/48AwEYg4iICAAAdQIQc5D9H+4AAAAASUVORK5CYII=';
 
 async function runTest() {
   const args = process.argv.slice(2);
@@ -36,11 +36,11 @@ async function runTest() {
       }
     } catch (err) {
       console.error(`Failed to read file ${filePath}:`, err.message);
-      console.log('Falling back to a 1x1 mock transparent PNG for connection test...');
+      console.log('Falling back to a 2x2 mock transparent PNG for connection test...');
     }
   } else {
     console.log('No local image file path provided as CLI argument.');
-    console.log('Using a 1x1 mock transparent PNG to run a basic connection and API key test.');
+    console.log('Using a 2x2 mock transparent PNG to run a basic connection and API key test.');
   }
 
   console.log(`Running analysis using category: "${category}"...`);

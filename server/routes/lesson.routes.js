@@ -1,45 +1,52 @@
 const express = require("express");
-
 const router = express.Router();
 
+const upload = require("../config/multer");
+
+const {
+    getAllLessons,
+    getLessonById,
+    createLesson,
+    updateLesson,
+    deleteLesson
+} = require("../controllers/lesson.controller");
+
 // Get all lessons
-router.get("/", (req, res) => {
-    res.json({
-        success: true,
-        message: "Get all lessons API is working"
-    });
+router.get("/", getAllLessons);
+
+// Upload Lesson File
+router.post("/upload", upload.single("file"), (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({
+                success: false,
+                message: "No file uploaded"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "File uploaded successfully",
+            file: req.file
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: error.message
+        });
+    }
 });
 
 // Get lesson by ID
-router.get("/:id", (req, res) => {
-    res.json({
-        success: true,
-        message: `Get lesson with ID ${req.params.id}`
-    });
-});
+router.get("/:id", getLessonById);
 
 // Create a new lesson
-router.post("/", (req, res) => {
-    res.json({
-        success: true,
-        message: "Create lesson API is working"
-    });
-});
+router.post("/", createLesson);
 
 // Update lesson
-router.put("/:id", (req, res) => {
-    res.json({
-        success: true,
-        message: `Update lesson with ID ${req.params.id}`
-    });
-});
+router.put("/:id", updateLesson);
 
 // Delete lesson
-router.delete("/:id", (req, res) => {
-    res.json({
-        success: true,
-        message: `Delete lesson with ID ${req.params.id}`
-    });
-});
+router.delete("/:id", deleteLesson);
 
 module.exports = router;

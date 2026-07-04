@@ -4,7 +4,11 @@ require("dotenv").config();
 
 const app = express();
 
-//middleware
+// Database Connection
+const connectDB = require("./config/db");
+connectDB();
+
+// Middleware
 app.use(cors());
 app.use(express.json());
 
@@ -17,16 +21,16 @@ const lessonRoutes = require("./routes/lesson.routes");
 const quizRoutes = require("./routes/quiz.routes");
 const aiRoutes = require("./routes/ai.routes");
 const notificationRoutes = require("./routes/notification.routes");
-
-//Home route
+const errorHandler = require("./middleware/error.middleware")
+// Home Route
 app.get("/", (req, res) => {
-    res.json({
-        success: true,
-        message: "STEMVision Backend is Running 🚀"
-    });
+  res.status(200).json({
+    success: true,
+    message: "STEMVision Backend is Running 🚀",
+  });
 });
 
-//register routes
+// Register Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/subjects", subjectRoutes);
 app.use("/api/teachers", teacherRoutes);
@@ -36,9 +40,27 @@ app.use("/api/quizzes", quizRoutes);
 app.use("/api/ai", aiRoutes);
 app.use("/api/notifications", notificationRoutes);
 
-// Start the server
+// 404 Route
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+
+  res.status(500).json({
+    success: false,
+    message: "Internal Server Error",
+  });
+});
+app.use(errorHandler);
+// Start Server
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });

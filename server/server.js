@@ -7,6 +7,9 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+const aiRoutes = require("./routes/ai.routes");
+app.use("/api/ai", aiRoutes);
+
 app.get("/", (req, res) => {
     res.json({
         success: true,

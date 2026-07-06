@@ -1,0 +1,71 @@
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.lesson-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-secondary);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.lesson-table thead {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.lesson-table th {
+  padding: var(--spacing-md);
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+}
+
+.lesson-table td {
+  padding: var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.lesson-table tbody tr:hover {
+  background-color: var(--hover-bg);
+}
+
+.lesson-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+  transform: scale(1.2);
+}
+
+.no-data {
+  text-align: center;
+  padding: var(--spacing-lg);
+  color: var(--text-light);
+}
+
+@media (max-width: 768px) {
+  .lesson-table {
+    font-size: var(--font-size-sm);
+  }
+
+  .lesson-table th,
+  .lesson-table td {
+    padding: var(--spacing-sm);
+  }
+}

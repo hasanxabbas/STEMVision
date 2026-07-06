@@ -1,0 +1,20 @@
+.teacher-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-lg);
+}
+
+.page-header {
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+}
+
+.page-header h1 {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-md);
+}
+
+.page-header p {
+  color: var(--text-light);
+  font-size: var(--font-size-lg);
+}

@@ -1,5 +1,5 @@
 const { processImageAnalysis } = require('../ai/services/analyzer');
-const ChatHistory = require('../models/ChatHistory');
+const AnalysisHistory = require('../models/AnalysisHistory');
 
 /**
  * Controller to handle STEM image analysis requests.
@@ -8,7 +8,7 @@ const ChatHistory = require('../models/ChatHistory');
 async function analyzeImageController(req, res) {
   try {
     const file = req.file;
-    const { category } = req.body;
+    const { category, lessonId, fileUrl } = req.body;
 
     if (!file) {
       return res.status(400).json({
@@ -24,14 +24,19 @@ async function analyzeImageController(req, res) {
       });
     }
 
-    // Call service to run Llama 4 Scout visual analysis
+    // Call service to run dynamic visual analysis
     const analysisResult = await processImageAnalysis(file.buffer, file.mimetype, category);
 
-    // Log to analysis/chat history
+    // Determine the file URL to log (can be updated when integrated with file upload storage like Cloudinary)
+    const activeFileUrl = fileUrl || (file ? file.originalname : undefined);
+
+    // Log to AnalysisHistory collection
     try {
-      const historyEntry = new ChatHistory({
+      const historyEntry = new AnalysisHistory({
         category,
         analysisResult,
+        fileUrl: activeFileUrl,
+        lessonId: lessonId || undefined,
         // userId: req.user?.id (to be hooked up when auth middleware is added)
       });
       await historyEntry.save();
@@ -39,9 +44,10 @@ async function analyzeImageController(req, res) {
       console.warn('Database save warning (MongoDB connection might be uninitialized):', dbError.message);
     }
 
+    // Standardized API response format
     return res.status(200).json({
       success: true,
-      category,
+      message: 'Analysis completed successfully',
       data: analysisResult,
     });
   } catch (error) {

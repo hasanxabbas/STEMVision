@@ -1,19 +1,24 @@
 const mongoose = require('mongoose');
 
-const ChatHistorySchema = new mongoose.Schema({
+const AnalysisHistorySchema = new mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: false, // Set false to ease initial sandbox/dev endpoint testing
+    required: false,
+  },
+  lessonId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Lesson',
+    required: false, // Optional if analyzed outside a specific lesson flow
   },
   category: {
     type: String,
     enum: ['diagram', 'equation', 'graph', 'code', 'whiteboard'],
     required: true,
   },
-  imageUrl: {
+  fileUrl: {
     type: String,
-    required: false,
+    required: false, // Stores URL path of the analyzed document/image
   },
   analysisResult: {
     type: mongoose.Schema.Types.Mixed,
@@ -25,4 +30,4 @@ const ChatHistorySchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model('ChatHistory', ChatHistorySchema);
+module.exports = mongoose.model('AnalysisHistory', AnalysisHistorySchema);

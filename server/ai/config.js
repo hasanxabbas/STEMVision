@@ -1,14 +1,27 @@
 const { Groq } = require('groq-sdk');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
 
-const apiKey = process.env.GROQ_API_KEY;
+const provider = process.env.AI_PROVIDER || 'groq';
 
-if (!apiKey) {
+// Initialize Groq Client
+const groqApiKey = process.env.GROQ_API_KEY;
+if (!groqApiKey && provider === 'groq') {
   console.warn('WARNING: GROQ_API_KEY environment variable is not defined.');
 }
-
 const groq = new Groq({
-  apiKey: apiKey || 'dummy-key-for-initialization',
+  apiKey: groqApiKey || 'dummy-key-for-initialization',
 });
 
-module.exports = groq;
+// Initialize Gemini Client
+const geminiApiKey = process.env.GEMINI_API_KEY;
+if (!geminiApiKey && provider === 'gemini') {
+  console.warn('WARNING: GEMINI_API_KEY environment variable is not defined.');
+}
+const gemini = geminiApiKey ? new GoogleGenerativeAI(geminiApiKey) : null;
+
+module.exports = {
+  groq,
+  gemini,
+  provider,
+};

@@ -107,31 +107,43 @@ nav{
 
 .hero h2{
 
-    color:#94A3B8;
+    color:#ffffff;
 
-    font-size:1.2rem;
+    font-size:2.6rem;
 
-}
+    font-weight:700;
 
-.hero h1{
-
-    margin:20px 0;
-
-    font-size:3.8rem;
-
-    font-weight:800;
+    margin-bottom:12px;
 
 }
 
-.hero p{
+.hero .subtitle{
 
-    max-width:700px;
+    font-size:1.3rem;
+
+    color:#d6e4ff;
+
+    margin-bottom:10px;
+
+}
+
+.hero .subtitle span{
+
+    color:#42d4ff;
+
+    font-weight:700;
+
+}
+
+.hero .instruction{
+
+    max-width:500px;
 
     margin:auto;
 
-    color:#CBD5E1;
+    color:#aebfd6;
 
-    line-height:1.8;
+    line-height:1.6;
 
     font-size:1.05rem;
 
@@ -155,9 +167,9 @@ nav{
 
 .orb{
 
-    width:160px;
+    width:240px;
 
-    height:160px;
+    height:240px;
 
     border-radius:50%;
 
@@ -171,7 +183,9 @@ nav{
 
     font-size:3rem;
 
-    box-shadow:0 0 40px rgba(59,130,246,.5);
+    box-shadow:
+    0 0 30px rgba(66,212,255,.45),
+    0 0 70px rgba(66,212,255,.25);
 
     animation:pulse 2s infinite;
 
@@ -219,7 +233,7 @@ nav{
 
     border-radius:40px;
 
-    font-size:1rem;
+    font-size:6.5rem;
 
     cursor:pointer;
 

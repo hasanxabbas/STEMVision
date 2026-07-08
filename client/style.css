@@ -265,9 +265,7 @@ nav{
 
 .card{
 
-    background:rgba(255,255,255,.05);
-
-    backdrop-filter:blur(20px);
+    background:#1E293B;
 
     padding:35px;
 
@@ -308,34 +306,63 @@ nav{
     line-height:1.6;
 
 }
+.blue{
 
-.blue i{
-
-    color:#3B82F6;
-
-}
-
-.green i{
-
-    color:#10B981;
+    background:#2563EB;
 
 }
 
-.orange i{
+.green{
 
-    color:#F59E0B;
-
-}
-
-.pink i{
-
-    color:#EC4899;
+    background:#16A34A;
 
 }
 
-.cyan i{
+.orange{
 
-    color:#06B6D4;
+    background:#EA580C;
+
+}
+
+.pink{
+
+    background:#7C3AED;
+
+}
+
+.cyan{
+
+    background:#0891B2;
+
+}
+
+.card i{
+
+    color:#ffffff;
+
+    font-size:3rem;
+
+    margin-bottom:20px;
+
+}
+
+.card h3{
+
+    color:#ffffff;
+
+    font-size:1.35rem;
+
+    margin-bottom:12px;
+
+    font-weight:700;
+
+}
+
+.card p{
+
+    color:#F8FAFC;
+
+    line-height:1.6;
 
 }
 

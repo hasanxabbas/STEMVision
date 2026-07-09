@@ -264,49 +264,46 @@ nav{
 }
 
 .card{
-
-    background:#1E293B;
-
-    padding:35px;
-
-    border-radius:20px;
-
-    transition:.35s;
-
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
     border:1px solid rgba(255,255,255,.08);
 
-    cursor:pointer;
+    border-radius:22px;
+    padding:28px;
 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+
+    gap:18px;
+
+    transition:.35s;
 }
+
 .card:hover{
-
-    transform:translateY(-10px) scale(1.03);
-
+    transform:translateY(-8px);
     box-shadow:0 20px 45px rgba(0,0,0,.35);
-
 }
 
-.card i{
-
-    font-size:2rem;
-
-    margin-bottom:20px;
-
-}
 
 .card h3{
 
-    margin-bottom:15px;
+    font-size:1.3rem;
+    font-weight:700;
+    margin:0;
 
 }
 
 .card p{
 
     color:#CBD5E1;
+    font-size:.95rem;
+    line-height:1.5;
+    margin:0;
 
-    line-height:1.6;
-
-}
+} 
 .blue{
 
     background:#2563EB;
@@ -336,14 +333,49 @@ nav{
     background:#0891B2;
 
 }
+.blue i{
+    background:rgba(255,255,255,.18);
+    color:white;
+}
+
+.green i{
+    background:rgba(255,255,255,.18);
+    color:white;
+}
+
+.orange i{
+    background:rgba(255,255,255,.18);
+    color:white;
+}
+
+.pink i{
+    background:rgba(255,255,255,.18);
+    color:white;
+}
+
+.cyan i{
+    background:rgba(255,255,255,.18);
+    color:white;
+}
 
 .card i{
 
+    width:160px;
+    height:160px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    margin:0 auto 18px;
+
+    font-size:9.5rem;
+
     color:#ffffff;
 
-    font-size:3rem;
+    background:rgba(255,255,255,.15);
 
-    margin-bottom:20px;
+    border-radius:22px;
 
 }
 

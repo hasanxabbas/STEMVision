@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import AccessibilityPanel from './AccessibilityPanel'
 import { useContext } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContextValue'
@@ -11,6 +13,8 @@ const Navbar = () => {
   const { isDarkMode, toggleTheme } = useContext(ThemeContext)
   const { toggleHighContrast } = useContext(AccessibilityContext)
   const navigate = useNavigate()
+  const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
+ 
 
   const handleLogout = () => {
     logout()
@@ -18,6 +22,7 @@ const Navbar = () => {
   }
 
   return (
+    <>
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
@@ -72,13 +77,24 @@ const Navbar = () => {
                 {isDarkMode ? '☀️' : '🌙'}
               </button>
               <button
-                className="control-btn"
-                onClick={toggleHighContrast}
-                aria-label="Toggle high contrast"
-                title="Toggle high contrast"
-              >
-                ◎
-              </button>
+  className="control-btn"
+  onClick={() => setIsAccessibilityOpen(true)}
+  aria-label="Accessibility Settings"
+  title="Accessibility Settings"
+>
+  ♿
+</button>
+              <button
+  className="control-btn"
+  onClick={() => {
+    console.log("Button clicked");
+    setIsAccessibilityOpen(true);
+  }}
+  aria-label="Accessibility Settings"
+  title="Accessibility Settings"
+>
+  I AM ALIVE 🔥  
+</button>
 
               <div className="user-menu">
                 <button className="user-btn">
@@ -101,6 +117,12 @@ const Navbar = () => {
         )}
       </div>
     </nav>
+    <AccessibilityPanel
+  isOpen={isAccessibilityOpen}
+  onClose={() => setIsAccessibilityOpen(false)}
+/>
+</>
+    
   )
 }
 

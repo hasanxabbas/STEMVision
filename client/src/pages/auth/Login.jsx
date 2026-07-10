@@ -3,13 +3,14 @@ import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContextValue'
 import { authService } from '../../services/auth.service'
 import Button from '../../components/common/Button'
-import { ROUTES } from '../../config/constant'
+
 import './Auth.css'
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: '', password: '' })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -35,7 +36,8 @@ const Login = () => {
   }
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" style={{ position: "relative" }}>
+     
       <div className="auth-form">
         <h1>STEMVision Login</h1>
         {error && <div className="error-message">{error}</div>}
@@ -52,7 +54,8 @@ const Login = () => {
               required
             />
           </div>
-
+         
+         
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -74,6 +77,7 @@ const Login = () => {
           Don't have an account? <a href={ROUTES.REGISTER}>Register here</a>
         </p>
       </div>
+      
     </div>
   )
 }

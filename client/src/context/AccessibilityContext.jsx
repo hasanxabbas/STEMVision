@@ -3,6 +3,13 @@ import { AccessibilityContext } from './AccessibilityContextValue'
 
 export const AccessibilityProvider = ({ children }) => {
   const [voiceEnabled, setVoiceEnabled] = useState(false)
+  const [fontSize, setFontSize] = useState("medium")
+
+const [colorVisionMode, setColorVisionMode] = useState("default")
+
+const [speechRate, setSpeechRate] = useState(1)
+
+const [language, setLanguage] = useState("English")
   const [highContrast, setHighContrast] = useState(
     localStorage.getItem('highContrast') === 'true' || false
   )
@@ -17,10 +24,10 @@ export const AccessibilityProvider = ({ children }) => {
     localStorage.setItem('highContrast', highContrast)
   }, [highContrast])
 
-  const speak = (text, rate = 1) => {
+  const speak = (text) => {
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text)
-      utterance.rate = rate
+      utterance.rate = speechRate;
       window.speechSynthesis.speak(utterance)
     }
   }
@@ -38,6 +45,17 @@ export const AccessibilityProvider = ({ children }) => {
   return (
     <AccessibilityContext.Provider
       value={{
+        fontSize,
+setFontSize,
+
+colorVisionMode,
+setColorVisionMode,
+
+speechRate,
+setSpeechRate,
+
+language,
+setLanguage,
         voiceEnabled,
         highContrast,
         screenReaderEnabled,

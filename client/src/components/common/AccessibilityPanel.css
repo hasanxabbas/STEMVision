@@ -1,0 +1,68 @@
+.accessibility-panel {
+  position: fixed;
+  top: 0;
+  right: -420px;
+  width: 400px;
+  height: 100vh;
+  background: #111827;
+  border-left: 1px solid #2d3748;
+  padding: 25px;
+  transition: right 0.35s ease;
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.accessibility-panel.open {
+  right: 0;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.panel-header h2 {
+  color: white;
+  font-size: 24px;
+}
+
+.panel-header button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.setting {
+  margin-bottom: 25px;
+}
+
+.setting label {
+  display: block;
+  color: white;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.setting select,
+.setting input[type="range"],
+.setting button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.setting select,
+.setting button {
+  background: #1f2937;
+  color: white;
+  border: none;
+}
+
+.setting p {
+  color: #60a5fa;
+  margin-top: 8px;
+}

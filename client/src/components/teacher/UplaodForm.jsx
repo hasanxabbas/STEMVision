@@ -1,8 +1,13 @@
+import { useEffect } from 'react'
+import { subjectService } from '../../services/subject.service'
+import { toList } from '../../utils/apiData'
 import { useState } from 'react'
 import './UploadForm.css'
 
 const UploadForm = ({ onSubmit, isLoading = false }) => {
-  const [formData, setFormData] = useState({
+  const [subjects, setSubjects] = useState([])
+
+const [formData, setFormData] = useState({
     title: '',
     description: '',
     subject: '',
@@ -24,6 +29,18 @@ const UploadForm = ({ onSubmit, isLoading = false }) => {
       file: e.target.files?.[0],
     }))
   }
+  useEffect(() => {
+  const loadSubjects = async () => {
+    try {
+      const data = await subjectService.getAll()
+      setSubjects(toList(data, ['subjects']))
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  loadSubjects()
+}, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -66,11 +83,15 @@ const UploadForm = ({ onSubmit, isLoading = false }) => {
             required
           >
             <option value="">Select Subject</option>
-            <option value="math">Mathematics</option>
-            <option value="physics">Physics</option>
-            <option value="chemistry">Chemistry</option>
-            <option value="biology">Biology</option>
-            <option value="cs">Computer Science</option>
+
+{subjects.map((subject) => (
+  <option
+    key={subject._id}
+    value={subject._id}
+  >
+    {subject.name}
+  </option>
+))}
           </select>
         </div>
 

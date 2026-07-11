@@ -16,7 +16,7 @@ export const quizService = {
   },
 
   getHistory: async () => {
-    const response = await api.get(`${ENDPOINTS.QUIZ}/history`)
-    return response.data
-  },
+  const response = await api.get(ENDPOINTS.QUIZ)
+  return response.data
+},
 }

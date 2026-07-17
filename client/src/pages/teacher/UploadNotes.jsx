@@ -9,17 +9,27 @@ const UploadNotes = () => {
 
   const handleUpload = async (data) => {
     const formData = new FormData()
-    formData.append('title', data.title)
-    formData.append('description', data.description)
-    formData.append('subject', data.subject)
-    formData.append('difficulty', data.difficulty)
+
     formData.append('file', data.file)
 
     try {
       setLoading(true)
-      const response = await lessonService.upload(formData)
-      setMessage(response.message || 'Lesson uploaded successfully.')
-    } catch {
+
+      // Step 1: Upload the file
+      const uploadResponse = await lessonService.upload(formData)
+
+      // Step 2: Create the lesson with the returned fileUrl
+      await lessonService.create({
+        title: data.title,
+        description: data.description,
+        subject: data.subject,
+        difficulty: data.difficulty,
+        fileUrl: uploadResponse.fileUrl,
+      })
+
+      setMessage('Lesson uploaded successfully.')
+    } catch (error) {
+      console.error(error)
       setMessage('Upload failed. Please try again.')
     } finally {
       setLoading(false)
@@ -34,7 +44,11 @@ const UploadNotes = () => {
       </div>
 
       {message && <p className="status-message">{message}</p>}
-      <UploadForm onSubmit={handleUpload} isLoading={loading} />
+
+      <UploadForm
+        onSubmit={handleUpload}
+        isLoading={loading}
+      />
     </div>
   )
 }

@@ -1,9 +1,11 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useContext } from 'react'
+import { AccessibilityContext } from '../../context/AccessibilityContextValue'
 import './ChatBox.css'
 import MessageBubble from './MessageBubble'
 import SpeechButton from '../accessibility/SpeechButton'
 
 const ChatBox = ({ onSendMessage, isLoading = false }) => {
+  const { speak } = useContext(AccessibilityContext)
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isSending, setIsSending] = useState(false)
@@ -22,74 +24,76 @@ const ChatBox = ({ onSendMessage, isLoading = false }) => {
     scrollToBottom()
   }, [messages])
 
-  const speak = (text) => {
-    if (!text) return
 
-    // Stop any speech already playing
-    window.speechSynthesis.cancel()
+  const sendMessage = async (text) => {
+  if (!text.trim() || isSending) return
 
-    const utterance = new SpeechSynthesisUtterance(text)
-
-    utterance.rate = 1
-    utterance.pitch = 1
-    utterance.volume = 1
-
-    window.speechSynthesis.speak(utterance)
+  const userMessage = {
+    text,
+    sender: 'user',
+    timestamp: new Date(),
   }
+
+  setMessages((prev) => [...prev, userMessage])
+
+  try {
+    setIsSending(true)
+
+    const reply = await onSendMessage?.(text)
+
+    const aiReply = reply || 'No response received.'
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: aiReply,
+        sender: 'ai',
+        timestamp: new Date(),
+      },
+    ])
+
+    speak(aiReply)
+  } catch {
+    const errorMessage = 'Sorry, I could not get an AI response.'
+
+    setMessages((prev) => [
+      ...prev,
+      {
+        text: errorMessage,
+        sender: 'ai',
+        timestamp: new Date(),
+      },
+    ])
+
+    speak(errorMessage)
+  } finally {
+    setIsSending(false)
+  }
+}
+ 
 
   const handleSend = async () => {
-    if (!input.trim()) return
+  if (!input.trim()) return
 
-    const text = input.trim()
+  const text = input.trim()
 
-    const userMessage = {
-      text,
-      sender: 'user',
-      timestamp: new Date(),
-    }
+  setInput('')
 
-    setMessages((prev) => [...prev, userMessage])
+  await sendMessage(text)
+}
+
+ const handleSpeechResult = async (transcript) => {
+  if (!transcript.trim()) return
+
+  // Show what was recognized
+  setInput(transcript)
+
+  // Small delay so the user can see the text
+  setTimeout(async () => {
     setInput('')
-
-    try {
-      setIsSending(true)
-
-      const reply = await onSendMessage?.(text)
-
-      const aiReply = reply || 'No response received.'
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: aiReply,
-          sender: 'ai',
-          timestamp: new Date(),
-        },
-      ])
-
-      // 🔊 Automatically read AI response
-      speak(aiReply)
-    } catch {
-      const errorMessage = 'Sorry, I could not get an AI response.'
-
-      setMessages((prev) => [
-        ...prev,
-        {
-          text: errorMessage,
-          sender: 'ai',
-          timestamp: new Date(),
-        },
-      ])
-
-      speak(errorMessage)
-    } finally {
-      setIsSending(false)
-    }
-  }
-
-  const handleSpeechResult = (transcript) => {
-    setInput(transcript)
-  }
+    await sendMessage(transcript.trim())
+  }, 500)
+}
 
   return (
     <div className="chatbox">
@@ -117,7 +121,11 @@ const ChatBox = ({ onSendMessage, isLoading = false }) => {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+           onKeyDown={(e) => {
+  if (e.key === 'Enter' && !disabled) {
+    handleSend()
+  }
+}}
             placeholder="Type your question..."
             disabled={disabled}
           />

@@ -1,11 +1,14 @@
-import { useState, useContext } from 'react'
+import { useState, useContext, useRef } from 'react'
 import { AccessibilityContext } from '../../context/AccessibilityContextValue'
 
 const SpeechButton = ({ onSpeechResult }) => {
   const { speak } = useContext(AccessibilityContext)
+
   const [isListening, setIsListening] = useState(false)
 
-  const handleClick = () => {
+  const recognitionRef = useRef(null)
+
+  const startListening = () => {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
       speak('Speech recognition is not supported in your browser')
       return
@@ -13,21 +16,40 @@ const SpeechButton = ({ onSpeechResult }) => {
 
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition
+
     const recognition = new SpeechRecognition()
 
-    recognition.onstart = () => setIsListening(true)
-    recognition.onend = () => setIsListening(false)
+    recognition.lang = 'en-US'
+    recognition.interimResults = false
+    recognition.maxAlternatives = 1
+
+    recognition.onstart = () => {
+      setIsListening(true)
+    }
+
+    recognition.onend = () => {
+      setIsListening(false)
+    }
+
     recognition.onresult = (event) => {
-      const transcript = Array.from(event.results)
-        .map((result) => result[0].transcript)
-        .join('')
+      const transcript = event.results[0][0].transcript.trim()
+
       onSpeechResult?.(transcript)
     }
 
+    recognitionRef.current = recognition
+    recognition.start()
+  }
+
+  const stopListening = () => {
+    recognitionRef.current?.stop()
+  }
+
+  const handleClick = () => {
     if (isListening) {
-      recognition.stop()
+      stopListening()
     } else {
-      recognition.start()
+      startListening()
     }
   }
 
@@ -38,7 +60,7 @@ const SpeechButton = ({ onSpeechResult }) => {
       aria-label="Voice input"
       title={isListening ? 'Listening...' : 'Click to speak'}
     >
-      {isListening ? '🎤' : '🎙️'}
+      {isListening ? '🎤 Listening...' : '🎙️ Speak'}
     </button>
   )
 }

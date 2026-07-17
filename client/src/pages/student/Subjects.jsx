@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { subjectService } from '../../services/subject.service'
+import { lessonService } from '../../services/lesson.service'
 import SubjectCard from '../../components/student/SubjectCard'
 import Loader from '../../components/common/Loader'
 import { getApiMessage, getItemId, toList } from '../../utils/apiData'
@@ -11,16 +12,35 @@ const Subjects = () => {
   const [message, setMessage] = useState('')
 
   const loadSubjects = useCallback(async () => {
-    try {
-      const data = await subjectService.getAll()
-      setSubjects(toList(data, ['subjects']))
-      setMessage(getApiMessage(data, ''))
-    } catch {
-      setMessage('Unable to load subjects right now.')
-    } finally {
-      setLoading(false)
-    }
-  }, [])
+  try {
+    const subjectData = await subjectService.getAll()
+    const lessonData = await lessonService.getAll()
+
+    const subjects = toList(subjectData, ["subjects"])
+    const lessons = toList(lessonData, ["lessons"])
+
+    const updatedSubjects = subjects.map((subject) => ({
+      ...subject,
+      lessonCount: lessons.filter((lesson) => {
+        if (!lesson.subject) return false
+
+        const lessonSubjectId =
+          typeof lesson.subject === "object"
+            ? lesson.subject._id
+            : lesson.subject
+
+        return lessonSubjectId === subject._id
+      }).length,
+    }))
+
+    setSubjects(updatedSubjects)
+    setMessage(getApiMessage(subjectData, ""))
+  } catch {
+    setMessage("Unable to load subjects right now.")
+  } finally {
+    setLoading(false)
+  }
+}, [])
 
   useEffect(() => {
     const timeoutId = window.setTimeout(loadSubjects, 0)

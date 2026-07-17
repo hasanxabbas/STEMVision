@@ -9,6 +9,11 @@ export const lessonService = {
     return response.data
   },
 
+  getLatest: async () => {
+    const response = await api.get(`${ENDPOINTS.LESSONS}/latest`)
+    return response.data
+  },
+
   getById: async (id) => {
     const response = await api.get(`${ENDPOINTS.LESSONS}/${id}`)
     return response.data

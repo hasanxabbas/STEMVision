@@ -6,7 +6,14 @@ import './Teacher.css'
 
 const ManageSubjects = () => {
   const [subjects, setSubjects] = useState([])
-  const [formData, setFormData] = useState({ name: '', description: '' })
+
+  const [formData, setFormData] = useState({
+    name: '',
+    code: '',
+    institution: '',
+    description: '',
+  })
+
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState('')
@@ -14,6 +21,7 @@ const ManageSubjects = () => {
   const loadSubjects = useCallback(async () => {
     try {
       const data = await subjectService.getAll()
+
       setSubjects(toList(data, ['subjects']))
       setMessage(getApiMessage(data, ''))
     } catch {
@@ -25,26 +33,47 @@ const ManageSubjects = () => {
 
   useEffect(() => {
     const timeoutId = window.setTimeout(loadSubjects, 0)
+
     return () => window.clearTimeout(timeoutId)
   }, [loadSubjects])
 
-  const handleChange = (event) => {
-    const { name, value } = event.target
-    setFormData((prev) => ({ ...prev, [name]: value }))
+  const handleChange = (e) => {
+    const { name, value } = e.target
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault()
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
     setSaving(true)
     setMessage('')
 
     try {
       const data = await subjectService.create(formData)
-      setMessage(getApiMessage(data, 'Subject saved successfully.'))
-      setFormData({ name: '', description: '' })
+
+      setMessage(
+        getApiMessage(data, 'Subject created successfully.')
+      )
+
+      setFormData({
+        name: '',
+        code: '',
+        institution: '',
+        description: '',
+      })
+
       await loadSubjects()
-    } catch {
-      setMessage('Unable to save subject right now.')
+    } catch (error) {
+      console.error(error)
+
+      setMessage(
+        error?.response?.data?.message ||
+          'Unable to save subject right now.'
+      )
     } finally {
       setSaving(false)
     }
@@ -55,10 +84,19 @@ const ManageSubjects = () => {
 
     try {
       const data = await subjectService.delete(id)
-      setMessage(getApiMessage(data, 'Subject deleted successfully.'))
+
+      setMessage(
+        getApiMessage(data, 'Subject deleted successfully.')
+      )
+
       await loadSubjects()
-    } catch {
-      setMessage('Unable to delete subject right now.')
+    } catch (error) {
+      console.error(error)
+
+      setMessage(
+        error?.response?.data?.message ||
+          'Unable to delete subject.'
+      )
     }
   }
 
@@ -71,9 +109,13 @@ const ManageSubjects = () => {
         <p>Create and organize subject areas for students</p>
       </div>
 
-      <form className="teacher-form" onSubmit={handleSubmit}>
+      <form
+        className="teacher-form"
+        onSubmit={handleSubmit}
+      >
         <div className="form-group">
           <label htmlFor="name">Subject Name</label>
+
           <input
             id="name"
             name="name"
@@ -82,8 +124,40 @@ const ManageSubjects = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label htmlFor="description">Description</label>
+          <label htmlFor="code">Subject Code</label>
+
+          <input
+            id="code"
+            name="code"
+            value={formData.code}
+            onChange={handleChange}
+            placeholder="Example: CS301"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="institution">
+            Institution
+          </label>
+
+          <input
+            id="institution"
+            name="institution"
+            value={formData.institution}
+            onChange={handleChange}
+            placeholder="Example: Integral University"
+            required
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="description">
+            Description
+          </label>
+
           <textarea
             id="description"
             name="description"
@@ -92,33 +166,64 @@ const ManageSubjects = () => {
             rows="3"
           />
         </div>
-        <button className="btn btn-primary" disabled={saving} type="submit">
+
+        <button
+          className="btn btn-primary"
+          disabled={saving}
+          type="submit"
+        >
           {saving ? 'Saving...' : 'Save Subject'}
         </button>
       </form>
 
-      {message && <p className="status-message">{message}</p>}
+      {message && (
+        <p className="status-message">
+          {message}
+        </p>
+      )}
 
       <div className="teacher-list">
-        {subjects.length === 0 && (
-          <p className="empty-state">No subjects have been created yet.</p>
-        )}
-
-        {subjects.map((subject) => (
-          <article className="teacher-list-item" key={getItemId(subject)}>
-            <div>
-              <h3>{subject.name || subject.title || 'Untitled Subject'}</h3>
-              <p>{subject.description || 'No description added.'}</p>
-            </div>
-            <button
-              className="btn btn-danger btn-sm"
-              onClick={() => handleDelete(getItemId(subject))}
-              type="button"
+        {subjects.length === 0 ? (
+          <p className="empty-state">
+            No subjects have been created yet.
+          </p>
+        ) : (
+          subjects.map((subject) => (
+            <article
+              className="teacher-list-item"
+              key={getItemId(subject)}
             >
-              Delete
-            </button>
-          </article>
-        ))}
+              <div>
+                <h3>{subject.name}</h3>
+
+                <p>
+                  <strong>Code:</strong>{' '}
+                  {subject.code}
+                </p>
+
+                <p>
+                  <strong>Institution:</strong>{' '}
+                  {subject.institution}
+                </p>
+
+                <p>
+                  {subject.description ||
+                    'No description available.'}
+                </p>
+              </div>
+
+              <button
+                className="btn btn-danger btn-sm"
+                type="button"
+                onClick={() =>
+                  handleDelete(getItemId(subject))
+                }
+              >
+                Delete
+              </button>
+            </article>
+          ))
+        )}
       </div>
     </div>
   )

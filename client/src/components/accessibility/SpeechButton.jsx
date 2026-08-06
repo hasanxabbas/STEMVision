@@ -1,7 +1,14 @@
-import { useState, useContext, useRef } from 'react'
+import {
+  useState,
+  useContext,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from 'react'
 import { AccessibilityContext } from '../../context/AccessibilityContextValue'
+import './SpeechButton.css'
 
-const SpeechButton = ({ onSpeechResult }) => {
+const SpeechButton = forwardRef(({ onSpeechResult }, ref) => {
   const { speak } = useContext(AccessibilityContext)
 
   const [isListening, setIsListening] = useState(false)
@@ -9,7 +16,10 @@ const SpeechButton = ({ onSpeechResult }) => {
   const recognitionRef = useRef(null)
 
   const startListening = () => {
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    if (
+      !('webkitSpeechRecognition' in window) &&
+      !('SpeechRecognition' in window)
+    ) {
       speak('Speech recognition is not supported in your browser')
       return
     }
@@ -31,6 +41,10 @@ const SpeechButton = ({ onSpeechResult }) => {
       setIsListening(false)
     }
 
+    recognition.onerror = () => {
+      setIsListening(false)
+    }
+
     recognition.onresult = (event) => {
       const transcript = event.results[0][0].transcript.trim()
 
@@ -45,6 +59,11 @@ const SpeechButton = ({ onSpeechResult }) => {
     recognitionRef.current?.stop()
   }
 
+  useImperativeHandle(ref, () => ({
+    startListening,
+    stopListening,
+  }))
+
   const handleClick = () => {
     if (isListening) {
       stopListening()
@@ -57,12 +76,12 @@ const SpeechButton = ({ onSpeechResult }) => {
     <button
       onClick={handleClick}
       className={`speech-btn ${isListening ? 'listening' : ''}`}
-      aria-label="Voice input"
-      title={isListening ? 'Listening...' : 'Click to speak'}
+      title="Voice Input"
+      type="button"
     >
-      {isListening ? '🎤 Listening...' : '🎙️ Speak'}
+      {isListening ? '🔴' : '🎤'}
     </button>
   )
-}
+})
 
 export default SpeechButton

@@ -47,6 +47,7 @@ export const ROUTES = {
   REGISTER: '/register',
   STUDENT_HOME: '/student/home',
   STUDENT_SUBJECTS: '/student/subjects',
+  STUDENT_SUBJECT_DETAILS: '/student/subjects/:id',
   STUDENT_HISTORY: '/student/history',
   STUDENT_PROFILE: '/student/profile',
   TEACHER_DASHBOARD: '/teacher/dashboard',

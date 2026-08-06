@@ -1,128 +1,207 @@
-import { useState } from 'react'
+import { useState, useContext, useEffect, useRef } from 'react'
 import AccessibilityPanel from './AccessibilityPanel'
-import { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContextValue'
 import { ThemeContext } from '../../context/ThemeContextValue'
-import { AccessibilityContext } from '../../context/AccessibilityContextValue'
 import { ROUTES, USER_ROLES } from '../../config/constant'
 import './Navbar.css'
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext)
   const { isDarkMode, toggleTheme } = useContext(ThemeContext)
-  const { toggleHighContrast } = useContext(AccessibilityContext)
+
   const navigate = useNavigate()
+  const location = useLocation()
+
   const [isAccessibilityOpen, setIsAccessibilityOpen] = useState(false)
- 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+
+  const dropdownRef = useRef(null)
+
+  const displayName =
+    user?.fullName ||
+    user?.name ||
+    user?.username ||
+    'Student'
 
   const handleLogout = () => {
     logout()
     navigate(ROUTES.LOGIN)
   }
 
+  // Always call hooks before any conditional return
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setIsDropdownOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+
+    return () => {
+      document.removeEventListener(
+        'mousedown',
+        handleClickOutside
+      )
+    }
+  }, [])
+
+  const hideNavbar =
+    location.pathname === ROUTES.LOGIN ||
+    location.pathname === ROUTES.REGISTER
+
+  if (hideNavbar) {
+    return null
+  }
+
   return (
     <>
-    <nav className="navbar">
-      <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          <span className="logo-text">STEMVision</span>
-        </Link>
+      <nav className="navbar">
+        <div className="navbar-container">
+          <Link to="/" className="navbar-logo">
+            <span className="logo-text">STEMVision</span>
+          </Link>
 
-        {user && (
-          <div className="navbar-menu">
-            <div className="navbar-nav">
-              {user.role === USER_ROLES.STUDENT && (
-                <>
-                  <Link to={ROUTES.STUDENT_HOME} className="nav-link">
-                    Home
-                  </Link>
-                  <Link to={ROUTES.STUDENT_SUBJECTS} className="nav-link">
-                    Subjects
-                  </Link>
-                  <Link to={ROUTES.AI_TUTOR} className="nav-link">
-                    AI Tutor
-                  </Link>
-                  <Link to={ROUTES.STUDENT_HISTORY} className="nav-link">
-                    History
-                  </Link>
-                </>
-              )}
+          {user && (
+            <div className="navbar-menu">
+              <div className="navbar-nav">
+                {user.role === USER_ROLES.STUDENT && (
+                  <>
+                    <Link
+                      to={ROUTES.STUDENT_HOME}
+                      className="nav-link"
+                    >
+                      Home
+                    </Link>
 
-              {user.role === USER_ROLES.TEACHER && (
-                <>
-                  <Link to={ROUTES.TEACHER_DASHBOARD} className="nav-link">
-                    Dashboard
-                  </Link>
-                  <Link
-                    to={ROUTES.TEACHER_MANAGE_SUBJECTS}
-                    className="nav-link"
-                  >
-                    Subjects
-                  </Link>
-                  <Link to={ROUTES.TEACHER_UPLOAD_NOTES} className="nav-link">
-                    Upload Notes
-                  </Link>
-                </>
-              )}
-            </div>
+                    <Link
+                      to={ROUTES.STUDENT_SUBJECTS}
+                      className="nav-link"
+                    >
+                      Subjects
+                    </Link>
 
-            <div className="navbar-controls">
-              <button
-                className="control-btn"
-                onClick={toggleTheme}
-                aria-label="Toggle dark mode"
-                title="Toggle dark mode"
-              >
-                {isDarkMode ? '☀️' : '🌙'}
-              </button>
-              <button
-  className="control-btn"
-  onClick={() => setIsAccessibilityOpen(true)}
-  aria-label="Accessibility Settings"
-  title="Accessibility Settings"
->
-  ♿
-</button>
-              <button
-  className="control-btn"
-  onClick={() => {
-    console.log("Button clicked");
-    setIsAccessibilityOpen(true);
-  }}
-  aria-label="Accessibility Settings"
-  title="Accessibility Settings"
->
-  I AM ALIVE 🔥  
-</button>
+                    <Link
+                      to={ROUTES.AI_TUTOR}
+                      className="nav-link"
+                    >
+                      AI Tutor
+                    </Link>
 
-              <div className="user-menu">
-                <button className="user-btn">
-                  {user.fullName} ({user.role})
+                    <Link
+                      to={ROUTES.STUDENT_HISTORY}
+                      className="nav-link"
+                    >
+                      History
+                    </Link>
+                  </>
+                )}
+
+                {user.role === USER_ROLES.TEACHER && (
+                  <>
+                    <Link
+                      to={ROUTES.TEACHER_DASHBOARD}
+                      className="nav-link"
+                    >
+                      Dashboard
+                    </Link>
+
+                    <Link
+                      to={ROUTES.TEACHER_MANAGE_SUBJECTS}
+                      className="nav-link"
+                    >
+                      Subjects
+                    </Link>
+
+                    <Link
+                      to={ROUTES.TEACHER_UPLOAD_NOTES}
+                      className="nav-link"
+                    >
+                      Upload Notes
+                    </Link>
+                  </>
+                )}
+              </div>
+
+              <div className="navbar-controls">
+                <button
+                  className="control-btn"
+                  onClick={toggleTheme}
+                  title="Toggle Theme"
+                >
+                  {isDarkMode ? '☀️' : '🌙'}
                 </button>
-                <div className="dropdown">
-                  <Link to={ROUTES.STUDENT_PROFILE} className="dropdown-item">
-                    Profile
-                  </Link>
+
+                <button
+                  className="control-btn"
+                  onClick={() => setIsAccessibilityOpen(true)}
+                  title="Accessibility"
+                >
+                  ♿
+                </button>
+
+                <div
+                  className="user-menu"
+                  ref={dropdownRef}
+                >
                   <button
-                    onClick={handleLogout}
-                    className="dropdown-item logout-btn"
+                    className="user-btn"
+                    onClick={() =>
+                      setIsDropdownOpen(!isDropdownOpen)
+                    }
                   >
-                    Logout
+                    👤
+
+                    <span className="user-name">
+                      {displayName}
+                    </span>
+
+                    <span className="arrow">
+                      {isDropdownOpen ? '▲' : '▼'}
+                    </span>
                   </button>
+
+                  {isDropdownOpen && (
+                    <div className="dropdown">
+                      <div className="dropdown-header">
+                        <strong>{displayName}</strong>
+                        <small>{user.role}</small>
+                      </div>
+
+                      <Link
+                        to={ROUTES.STUDENT_PROFILE}
+                        className="dropdown-item"
+                        onClick={() =>
+                          setIsDropdownOpen(false)
+                        }
+                      >
+                        👤 Profile
+                      </Link>
+
+                      <button
+                        className="dropdown-item logout-btn"
+                        onClick={handleLogout}
+                      >
+                        🚪 Logout
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
-        )}
-      </div>
-    </nav>
-    <AccessibilityPanel
-  isOpen={isAccessibilityOpen}
-  onClose={() => setIsAccessibilityOpen(false)}
-/>
-</>
-    
+          )}
+        </div>
+      </nav>
+
+      <AccessibilityPanel
+        isOpen={isAccessibilityOpen}
+        onClose={() => setIsAccessibilityOpen(false)}
+      />
+    </>
   )
 }
 

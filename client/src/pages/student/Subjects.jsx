@@ -5,8 +5,11 @@ import SubjectCard from '../../components/student/SubjectCard'
 import Loader from '../../components/common/Loader'
 import { getApiMessage, getItemId, toList } from '../../utils/apiData'
 import './Student.css'
+import { useNavigate } from 'react-router-dom'
 
 const Subjects = () => {
+  const navigate = useNavigate()
+
   const [subjects, setSubjects] = useState([])
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
@@ -65,10 +68,13 @@ const Subjects = () => {
 
         {subjects.map((subject) => (
           <SubjectCard
-            key={getItemId(subject)}
-            subject={subject}
-            lessonCount={subject.lessonCount || 0}
-          />
+  key={getItemId(subject)}
+  subject={subject}
+  lessonCount={subject.lessonCount || 0}
+  onClick={() =>
+    navigate(`/student/subjects/${getItemId(subject)}`)
+  }
+/>
         ))}
       </div>
     </div>

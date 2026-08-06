@@ -2,24 +2,33 @@ import api from './api'
 import { ENDPOINTS } from '../config/constant'
 
 export const aiService = {
-  chat: async (message, lessonContext = null) => {
+  chat: async (message, lessonId = null) => {
     const response = await api.post(ENDPOINTS.AI_CHAT, {
       message,
-      lessonContext,
+      lessonId,
     })
+
     return response.data
   },
 
   explainDiagram: async (imageFile, context = null) => {
     const formData = new FormData()
     formData.append('image', imageFile)
+
     if (context) {
       formData.append('context', context)
     }
 
-    const response = await api.post(ENDPOINTS.AI_EXPLAIN_DIAGRAM, formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
+    const response = await api.post(
+      ENDPOINTS.AI_EXPLAIN_DIAGRAM,
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    )
+
     return response.data
   },
 
@@ -28,6 +37,7 @@ export const aiService = {
       lessonId,
       numberOfQuestions,
     })
+
     return response.data
   },
 }

@@ -8,7 +8,11 @@ import { toList } from '../../utils/apiData'
 import './Teacher.css'
 
 const Dashboard = () => {
-  const [stats, setStats] = useState({ subjects: 0, lessons: 0 })
+  const [stats, setStats] = useState({
+    subjects: 0,
+    lessons: 0,
+  })
+
   const [loading, setLoading] = useState(true)
 
   const loadDashboard = useCallback(async () => {
@@ -23,48 +27,79 @@ const Dashboard = () => {
         lessons: toList(lessonsData, ['lessons']).length,
       })
     } catch {
-      setStats({ subjects: 0, lessons: 0 })
+      setStats({
+        subjects: 0,
+        lessons: 0,
+      })
     } finally {
       setLoading(false)
     }
   }, [])
 
   useEffect(() => {
-    const timeoutId = window.setTimeout(loadDashboard, 0)
-    return () => window.clearTimeout(timeoutId)
+    loadDashboard()
   }, [loadDashboard])
 
   if (loading) return <Loader />
 
   return (
     <div className="teacher-page">
-      <div className="page-header">
-        <h1>Teacher Dashboard</h1>
-        <p>Manage STEMVision subjects, lessons, and uploaded materials</p>
+
+      <div className="dashboard-hero">
+        <h1>👨‍🏫 Teacher Dashboard</h1>
+
+        <p>
+          Manage your subjects, upload notes and support students through AI-powered learning.
+        </p>
       </div>
 
       <div className="teacher-stats">
+
         <div className="teacher-stat">
+          <h2>📚</h2>
           <span>{stats.subjects}</span>
           <p>Subjects</p>
         </div>
+
         <div className="teacher-stat">
+          <h2>📄</h2>
           <span>{stats.lessons}</span>
           <p>Lessons</p>
         </div>
+
+        <div className="teacher-stat">
+          <h2>🤖</h2>
+          <span>AI</span>
+          <p>Learning Assistant</p>
+        </div>
+
       </div>
 
       <div className="teacher-actions">
-        <Link to={ROUTES.TEACHER_MANAGE_SUBJECTS} className="btn btn-primary">
-          Manage Subjects
+
+        <Link
+          to={ROUTES.TEACHER_MANAGE_SUBJECTS}
+          className="btn btn-primary"
+        >
+          📚 Manage Subjects
         </Link>
-        <Link to={ROUTES.TEACHER_MANAGE_LESSONS} className="btn btn-secondary">
-          Manage Lessons
+
+        <Link
+          to={ROUTES.TEACHER_MANAGE_LESSONS}
+          className="btn btn-secondary"
+        >
+          📖 Manage Lessons
         </Link>
-        <Link to={ROUTES.TEACHER_UPLOAD_NOTES} className="btn btn-success">
-          Upload Notes
+
+        <Link
+          to={ROUTES.TEACHER_UPLOAD_NOTES}
+          className="btn btn-success"
+        >
+          ⬆ Upload Notes
         </Link>
+
       </div>
+
     </div>
   )
 }

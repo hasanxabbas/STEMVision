@@ -12,6 +12,7 @@ const Register = () => {
     email: '',
     password: '',
     role: 'student',
+    branch: 'Computer Science (CSE)',
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
@@ -33,7 +34,8 @@ const Register = () => {
         formData.fullName,
         formData.email,
         formData.password,
-        formData.role
+        formData.role,
+        formData.branch
       )
       login(response.user, response.token)
       navigate(formData.role === 'teacher' ? ROUTES.TEACHER_DASHBOARD : ROUTES.STUDENT_HOME)
@@ -97,6 +99,25 @@ const Register = () => {
             >
               <option value="student">Student</option>
               <option value="teacher">Teacher</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="branch">Select Branch *</label>
+            <select
+              id="branch"
+              name="branch"
+              value={formData.branch}
+              onChange={handleChange}
+              required
+            >
+              <option value="Computer Science (CSE)">Computer Science (CSE)</option>
+              <option value="Information Technology (IT)">Information Technology (IT)</option>
+              <option value="Electronics & Communication (ECE)">Electronics & Communication (ECE)</option>
+              <option value="Electrical Engineering (EEE)">Electrical Engineering (EEE)</option>
+              <option value="Mechanical Engineering (ME)">Mechanical Engineering (ME)</option>
+              <option value="Civil Engineering (CE)">Civil Engineering (CE)</option>
+              <option value="Data Science & AI (DS & AI)">Data Science & AI (DS & AI)</option>
             </select>
           </div>
 

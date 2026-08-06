@@ -1,0 +1,361 @@
+.student-home-container {
+  background-color: var(--bg-primary);
+  color: var(--text-color);
+  min-height: calc(100vh - 60px);
+  width: 100%;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin-top: -60px; /* Offset the margin-top from app-content if any */
+  padding-top: 60px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.student-home-container .container {
+  width: 90%;
+  max-width: 1300px;
+  margin: auto;
+  padding-bottom: 60px;
+}
+
+/* ===========================
+   HERO
+   =========================== */
+
+.student-home-container .hero {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.student-home-container .hero h2 {
+  color: var(--text-light);
+  font-size: 2.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.student-home-container .hero h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 15px;
+  background: linear-gradient(135deg, #0284c7, #6366f1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme='dark'] .student-home-container .hero h1 {
+  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.student-home-container .hero p {
+  font-size: 1.25rem;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 620px;
+  margin: auto;
+  font-weight: 500;
+}
+
+/* ===========================
+   VOICE
+   =========================== */
+
+.student-home-container .voice {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.student-home-container .orb {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2563eb, #0891b2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 3.5rem;
+  box-shadow: 
+    0 0 30px rgba(37, 99, 235, 0.4),
+    0 0 60px rgba(8, 145, 178, 0.2);
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.student-home-container .orb.listening {
+  animation: pulse 1.5s infinite;
+  background: linear-gradient(135deg, #dc2626, #ea580c);
+  box-shadow: 
+    0 0 30px rgba(220, 38, 38, 0.5),
+    0 0 60px rgba(234, 88, 12, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 60px rgba(37, 99, 235, 0.8);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 25px rgba(37, 99, 235, 0.5);
+  }
+}
+
+.student-home-container .voice-btn {
+  margin-top: 25px;
+  border: none;
+  background: var(--primary-color);
+  color: #ffffff;
+  padding: 14px 36px;
+  border-radius: 30px;
+  font-size: 1.15rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+}
+
+.student-home-container .voice-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
+}
+
+.student-home-container .voice-btn.listening {
+  background: #dc2626;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, 0.4);
+}
+
+/* ===========================
+   VISUALLY IMPAIRED FRIENDLY ACTION CARDS
+   =========================== */
+
+.student-home-container .cards {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+}
+
+.student-home-container .card {
+  background-color: var(--card-bg);
+  border-radius: 20px;
+  padding: 28px 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border: 2.5px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+.student-home-container .card:focus-visible {
+  outline: 4px solid var(--primary-color);
+  outline-offset: 4px;
+}
+
+/* High Contrast Icon Badges */
+.student-home-container .card-icon-badge {
+  width: 64px;
+  height: 64px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  margin-bottom: 16px;
+  transition: transform 0.3s ease;
+}
+
+.student-home-container .card:hover .card-icon-badge {
+  transform: scale(1.12);
+}
+
+/* Individual Visually Impaired Color Themes */
+
+/* Card 1: Explain Diagram (Indigo / Royal Blue) */
+.student-home-container .card-blue {
+  border-color: #2563eb;
+}
+.student-home-container .card-blue .blue-badge {
+  background-color: rgba(37, 99, 235, 0.15);
+  border: 2px solid #2563eb;
+}
+.student-home-container .card-blue:hover {
+  background-color: rgba(37, 99, 235, 0.08);
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.25);
+  transform: translateY(-6px);
+}
+
+/* Card 2: Read PDF (Emerald / Forest Green) */
+.student-home-container .card-green {
+  border-color: #059669;
+}
+.student-home-container .card-green .green-badge {
+  background-color: rgba(5, 150, 105, 0.15);
+  border: 2px solid #059669;
+}
+.student-home-container .card-green:hover {
+  background-color: rgba(5, 150, 105, 0.08);
+  box-shadow: 0 12px 28px rgba(5, 150, 105, 0.25);
+  transform: translateY(-6px);
+}
+
+/* Card 3: Learn Concept (Amber Gold / Warm Orange) */
+.student-home-container .card-amber {
+  border-color: #d97706;
+}
+.student-home-container .card-amber .amber-badge {
+  background-color: rgba(217, 119, 6, 0.15);
+  border: 2px solid #d97706;
+}
+.student-home-container .card-amber:hover {
+  background-color: rgba(217, 119, 6, 0.08);
+  box-shadow: 0 12px 28px rgba(217, 119, 6, 0.25);
+  transform: translateY(-6px);
+}
+
+/* Card 4: Quiz Me (Amethyst / Violet Purple) */
+.student-home-container .card-purple {
+  border-color: #7c3aed;
+}
+.student-home-container .card-purple .purple-badge {
+  background-color: rgba(124, 58, 237, 0.15);
+  border: 2px solid #7c3aed;
+}
+.student-home-container .card-purple:hover {
+  background-color: rgba(124, 58, 237, 0.08);
+  box-shadow: 0 12px 28px rgba(124, 58, 237, 0.25);
+  transform: translateY(-6px);
+}
+
+/* Card 5: Progress (Teal / Cyan) */
+.student-home-container .card-cyan {
+  border-color: #0891b2;
+}
+.student-home-container .card-cyan .cyan-badge {
+  background-color: rgba(8, 145, 178, 0.15);
+  border: 2px solid #0891b2;
+}
+.student-home-container .card-cyan:hover {
+  background-color: rgba(8, 145, 178, 0.08);
+  box-shadow: 0 12px 28px rgba(8, 145, 178, 0.25);
+  transform: translateY(-6px);
+}
+
+.student-home-container .card h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.student-home-container .card p {
+  color: var(--text-light);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ===========================
+   PROGRESS
+   =========================== */
+
+.student-home-container .progress {
+  margin-top: 60px;
+  background-color: var(--bg-secondary);
+  border: 2.5px solid var(--border-color);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+}
+
+.student-home-container .progress h2 {
+  font-size: 1.4rem;
+  margin: 0 0 8px 0;
+  color: var(--text-light);
+  font-weight: 700;
+}
+
+.student-home-container .progress h3 {
+  font-size: 1.8rem;
+  margin: 0 0 16px 0;
+  color: var(--text-color);
+  font-weight: 800;
+}
+
+.student-home-container .progress-bar {
+  height: 12px;
+  background: var(--bg-tertiary);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15px;
+  border: 1px solid var(--border-color);
+}
+
+.student-home-container .progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #38bdf8, #2563eb);
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.student-home-container .progress button {
+  margin-top: 25px;
+  padding: 14px 28px;
+  border: none;
+  border-radius: 25px;
+  background: var(--primary-color);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.student-home-container .progress button:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+}
+
+/* ===========================
+   RESPONSIVE
+   =========================== */
+
+@media (max-width: 768px) {
+  .student-home-container .hero h1 {
+    font-size: 2.5rem;
+  }
+  .student-home-container .hero h2 {
+    font-size: 1.8rem;
+  }
+  .student-home-container .orb {
+    width: 140px;
+    height: 140px;
+    font-size: 2.8rem;
+  }
+  .student-home-container .cards {
+    grid-template-columns: 1fr;
+  }
+}
+.latest-label{
+    display:inline-block;
+    padding:6px 14px;
+    border-radius:20px;
+    background:#eef2ff;
+    color:#4f46e5;
+    font-size:0.9rem;
+    font-weight:600;
+    margin-bottom:12px;
+}

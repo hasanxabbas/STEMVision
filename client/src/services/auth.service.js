@@ -22,13 +22,14 @@ export const authService = {
     return normalizeAuthResponse(response.data)
   },
 
-  register: async (fullName, email, password, role) => {
+  register: async (fullName, email, password, role, branch) => {
     const response = await api.post(ENDPOINTS.AUTH_REGISTER, {
       username: fullName,
       name: fullName,
       email,
       password,
       role: role === 'teacher' ? 'Teacher' : 'Student',
+      branch: branch || 'Computer Science',
     })
     return normalizeAuthResponse(response.data)
   },

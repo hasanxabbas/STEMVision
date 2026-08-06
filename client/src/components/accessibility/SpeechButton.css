@@ -1,0 +1,24 @@
+.speech-btn {
+  width: 56px;
+  height: 56px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: white;
+
+  font-size: 22px;
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.speech-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(79, 70, 229, 0.25);
+}
+
+.speech-btn.listening {
+  background: #ef4444;
+}

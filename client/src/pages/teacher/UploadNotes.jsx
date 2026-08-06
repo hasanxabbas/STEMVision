@@ -18,13 +18,15 @@ const UploadNotes = () => {
       // Step 1: Upload the file
       const uploadResponse = await lessonService.upload(formData)
 
-      // Step 2: Create the lesson with the returned fileUrl
+      // Step 2: Create the lesson with the returned fileUrl and lessonContent
       await lessonService.create({
         title: data.title,
         description: data.description,
         subject: data.subject,
+        branch: data.branch,
         difficulty: data.difficulty,
         fileUrl: uploadResponse.fileUrl,
+        lessonContent: uploadResponse.lessonContent,
       })
 
       setMessage('Lesson uploaded successfully.')

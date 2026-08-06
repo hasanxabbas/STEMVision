@@ -6,17 +6,15 @@ const AccessibilityPanel = ({ isOpen, onClose }) => {
     console.log("Panel rendered", isOpen)
     console.log("Accessibility panel open:", isOpen);
   const {
-    fontSize,
-    setFontSize,
-    colorVisionMode,
-    setColorVisionMode,
-    speechRate,
-    setSpeechRate,
-    language,
-    setLanguage,
-    highContrast,
-    toggleHighContrast,
-  } = useContext(AccessibilityContext);
+  fontSize,
+  setFontSize,
+  colorVisionMode,
+  setColorVisionMode,
+  speechRate,
+  setSpeechRate,
+  highContrast,
+  toggleHighContrast,
+} = useContext(AccessibilityContext);
 
   return (
     <div
@@ -78,20 +76,7 @@ const AccessibilityPanel = ({ isOpen, onClose }) => {
         <p>{speechRate}x</p>
       </div>
 
-      {/* Language */}
-
-      <div className="setting">
-        <label>🌍 Language</label>
-
-        <select
-          value={language}
-          onChange={(e) => setLanguage(e.target.value)}
-        >
-          <option>English</option>
-          <option>Hindi</option>
-          <option>Urdu</option>
-        </select>
-      </div>
+      
 
       {/* High Contrast */}
 

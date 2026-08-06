@@ -41,7 +41,11 @@ const LessonTable = ({ lessons, onEdit, onDelete, isLoading }) => {
               <tr key={lessonId}>
                 <td>{lesson.title || 'Untitled Lesson'}</td>
                 <td>{getSubjectName(lesson.subject)}</td>
-                <td>{lesson.difficulty || 'Not set'}</td>
+                <td>
+  {lesson.aiDifficulty ||
+    lesson.difficulty ||
+    "Not set"}
+</td>
                 <td>{formatDate(lesson.date || lesson.createdAt)}</td>
                 <td className="actions">
                   <button

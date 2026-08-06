@@ -3,10 +3,10 @@ import { AccessibilityContext } from './AccessibilityContextValue'
 
 export const AccessibilityProvider = ({ children }) => {
   const [voiceEnabled, setVoiceEnabled] = useState(true)
+
   const [fontSize, setFontSize] = useState('medium')
   const [colorVisionMode, setColorVisionMode] = useState('default')
   const [speechRate, setSpeechRate] = useState(1)
-  const [language, setLanguage] = useState('English')
 
   const [highContrast, setHighContrast] = useState(
     localStorage.getItem('highContrast') === 'true' || false
@@ -14,6 +14,9 @@ export const AccessibilityProvider = ({ children }) => {
 
   const [screenReaderEnabled, setScreenReaderEnabled] = useState(false)
 
+  // ------------------------------
+  // High Contrast
+  // ------------------------------
   useEffect(() => {
     if (highContrast) {
       document.documentElement.setAttribute('data-contrast', 'high')
@@ -24,6 +27,47 @@ export const AccessibilityProvider = ({ children }) => {
     localStorage.setItem('highContrast', highContrast)
   }, [highContrast])
 
+  // ------------------------------
+  // Font Size
+  // ------------------------------
+  useEffect(() => {
+    const root = document.documentElement
+
+    switch (fontSize) {
+      case 'small':
+        root.style.fontSize = '14px'
+        break
+
+      case 'medium':
+        root.style.fontSize = '16px'
+        break
+
+      case 'large':
+        root.style.fontSize = '18px'
+        break
+
+      case 'extra-large':
+        root.style.fontSize = '20px'
+        break
+
+      default:
+        root.style.fontSize = '16px'
+    }
+  }, [fontSize])
+
+  // ------------------------------
+  // Color Vision
+  // ------------------------------
+  useEffect(() => {
+    document.documentElement.setAttribute(
+      'data-color-mode',
+      colorVisionMode
+    )
+  }, [colorVisionMode])
+
+  // ------------------------------
+  // Speak Function
+  // ------------------------------
   const speak = (text) => {
     if (!text) return
     if (!('speechSynthesis' in window)) return
@@ -57,10 +101,13 @@ export const AccessibilityProvider = ({ children }) => {
     setVoiceEnabled((prev) => !prev)
   }
 
-  const toggleHighContrast = () => setHighContrast((prev) => !prev)
+  const toggleHighContrast = () => {
+    setHighContrast((prev) => !prev)
+  }
 
-  const toggleScreenReader = () =>
+  const toggleScreenReader = () => {
     setScreenReaderEnabled((prev) => !prev)
+  }
 
   return (
     <AccessibilityContext.Provider
@@ -76,9 +123,6 @@ export const AccessibilityProvider = ({ children }) => {
 
         speechRate,
         setSpeechRate,
-
-        language,
-        setLanguage,
 
         highContrast,
         toggleHighContrast,

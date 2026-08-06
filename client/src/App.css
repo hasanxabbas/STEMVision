@@ -1,34 +1,36 @@
 /* CSS Variables - Light Mode (Default) */
 :root {
   /* Colors */
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
-  --success-color: #27ae60;
-  --warning-color: #f39c12;
-  --danger-color: #e74c3c;
-  --info-color: #3498db;
+  --primary-color: #2563eb;
+  --secondary-color: #7c3aed;
+  --success-color: #059669;
+  --warning-color: #d97706;
+  --danger-color: #dc2626;
+  --info-color: #0891b2;
 
-  /* Text */
-  --text-color: #333;
-  --text-light: #666;
-  --text-lighter: #999;
+  /* Text - High Contrast for Accessibility */
+  --text-color: #0f172a;
+  --text-light: #334155;
+  --text-lighter: #64748b;
 
   /* Backgrounds */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8f9fa;
-  --bg-tertiary: #f0f0f0;
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f5f9;
+  --card-bg: #ffffff;
+  --card-border: #cbd5e1;
 
   /* Navbar */
   --navbar-bg: #ffffff;
-  --navbar-text: #333;
+  --navbar-text: #0f172a;
 
   /* Sidebar */
-  --sidebar-bg: #f8f9fa;
+  --sidebar-bg: #ffffff;
 
   /* Borders & Utilities */
-  --border-color: #e0e0e0;
-  --hover-bg: #f0f0f0;
-  --shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --border-color: #cbd5e1;
+  --hover-bg: #e2e8f0;
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 
   /* Spacing */
   --spacing-xs: 0.25rem;
@@ -44,7 +46,7 @@
   --font-size-xl: 1.5rem;
   --font-size-2xl: 2rem;
 
-  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --font-family: 'Plus Jakarta Sans', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-bold: 700;
@@ -52,24 +54,26 @@
 
 /* Dark Mode */
 [data-theme='dark'] {
-  --primary-color: #667eea;
-  --secondary-color: #764ba2;
+  --primary-color: #38bdf8;
+  --secondary-color: #818cf8;
 
-  --text-color: #e0e0e0;
-  --text-light: #b0b0b0;
-  --text-lighter: #808080;
+  --text-color: #f8fafc;
+  --text-light: #cbd5e1;
+  --text-lighter: #94a3b8;
 
-  --bg-primary: #1e1e2e;
-  --bg-secondary: #2d2d44;
-  --bg-tertiary: #3a3a52;
+  --bg-primary: #0b1120;
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --card-bg: #1e293b;
+  --card-border: #334155;
 
-  --navbar-bg: #1e1e2e;
-  --navbar-text: #e0e0e0;
+  --navbar-bg: #0f172a;
+  --navbar-text: #f8fafc;
 
-  --sidebar-bg: #2d2d44;
+  --sidebar-bg: #1e293b;
 
-  --border-color: #444;
-  --hover-bg: #3a3a52;
+  --border-color: #334155;
+  --hover-bg: #334155;
 }
 
 /* High Contrast Mode */
@@ -369,4 +373,23 @@ label {
   .app-content {
     margin-top: 60px;
   }
+}
+/* ===========================================
+   COLOR VISION MODES
+=========================================== */
+
+[data-color-mode="default"] {
+  filter: none;
+}
+
+[data-color-mode="protanopia"] {
+  filter: hue-rotate(-20deg) saturate(0.8);
+}
+
+[data-color-mode="deuteranopia"] {
+  filter: hue-rotate(25deg) saturate(0.8);
+}
+
+[data-color-mode="tritanopia"] {
+  filter: saturate(0.6) brightness(1.08);
 }

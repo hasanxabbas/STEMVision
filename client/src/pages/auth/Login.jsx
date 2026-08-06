@@ -1,6 +1,6 @@
 import { ROUTES } from '../../config/constant'
 import { useState, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContextValue'
 import { authService } from '../../services/auth.service'
 import Button from '../../components/common/Button'
@@ -14,6 +14,10 @@ const Login = () => {
   
   const { login } = useContext(AuthContext)
   const navigate = useNavigate()
+  const location = useLocation()
+
+const selectedRole =
+  location.state?.role || 'Student'
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -27,6 +31,15 @@ const Login = () => {
 
     try {
       const response = await authService.login(formData.email, formData.password)
+      const actualRole = response.user.role.toLowerCase()
+const expectedRole = selectedRole.toLowerCase()
+
+if (actualRole !== expectedRole) {
+  setError(
+    `This account belongs to a ${response.user.role}. Please use the ${response.user.role} Login.`
+  )
+  return
+}
       login(response.user, response.token)
       navigate(response.user.role === 'teacher' ? ROUTES.TEACHER_DASHBOARD : ROUTES.STUDENT_HOME)
     } catch (err) {
@@ -38,9 +51,35 @@ const Login = () => {
 
   return (
     <div className="auth-container" style={{ position: "relative" }}>
+      <button
+  onClick={() => navigate("/")}
+  style={{
+    position: "absolute",
+    top: "25px",
+    left: "25px",
+    background: "transparent",
+    border: "none",
+    fontSize: "1rem",
+    cursor: "pointer",
+    color: "#2563eb",
+    fontWeight: "600",
+  }}
+>
+  ← Back
+</button>
      
       <div className="auth-form">
-        <h1>STEMVision Login</h1>
+        <h1>{selectedRole} Login</h1>
+
+<p
+  style={{
+    marginBottom: '25px',
+    color: '#666',
+    textAlign: 'center',
+  }}
+>
+  Welcome to STEMVision
+</p>
         {error && <div className="error-message">{error}</div>}
 
         <form onSubmit={handleSubmit}>
@@ -75,7 +114,9 @@ const Login = () => {
         </form>
 
         <p className="auth-link">
-          Don't have an account? <a href={ROUTES.REGISTER}>Register here</a>
+          Don't have an account? <Link to={ROUTES.REGISTER}>
+  Register here
+</Link>
         </p>
       </div>
       

@@ -7,10 +7,11 @@ import './UploadForm.css'
 const UploadForm = ({ onSubmit, isLoading = false }) => {
   const [subjects, setSubjects] = useState([])
 
-const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState({
     title: '',
     description: '',
     subject: '',
+    branch: 'Computer Science',
     difficulty: 'intermediate',
     file: null,
   })
@@ -92,6 +93,26 @@ const [formData, setFormData] = useState({
     {subject.name}
   </option>
 ))}
+          </select>
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="branch">Target Branch *</label>
+          <select
+            id="branch"
+            name="branch"
+            value={formData.branch}
+            onChange={handleChange}
+            required
+          >
+            <option value="General">General / All Branches</option>
+            <option value="Computer Science">Computer Science (CSE)</option>
+            <option value="Information Technology">Information Technology (IT)</option>
+            <option value="Electronics & Communication">Electronics & Communication (ECE)</option>
+            <option value="Electrical Engineering">Electrical Engineering (EEE)</option>
+            <option value="Mechanical Engineering">Mechanical Engineering (ME)</option>
+            <option value="Civil Engineering">Civil Engineering (CE)</option>
+            <option value="Data Science & AI">Data Science & AI (DS & AI)</option>
           </select>
         </div>
 

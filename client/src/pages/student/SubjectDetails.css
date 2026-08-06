@@ -1,0 +1,167 @@
+/* ==========================
+   Subject Details Page
+========================== */
+
+.student-page {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* ==========================
+   Header
+========================== */
+
+.subject-header {
+  margin-bottom: 35px;
+}
+
+.subject-header h1 {
+  font-size: 2.5rem;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+}
+
+.subject-header p {
+  color: #6b7280;
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+
+.lesson-count {
+  display: inline-block;
+  background: #2563eb;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 30px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+/* ==========================
+   Lesson Card
+========================== */
+
+.lesson-card {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  transition: 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 8px;
+  height: 100%;
+  background: #2563eb;
+}
+
+.lesson-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+}
+
+.lesson-icon {
+  font-size: 45px;
+  margin-bottom: 15px;
+}
+
+.lesson-title {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  color: #111827;
+}
+
+.lesson-description {
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+/* ==========================
+   Metadata
+========================== */
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.badge {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==========================
+   Button
+========================== */
+
+.open-btn {
+  display: inline-block;
+  text-decoration: none;
+  background: #2563eb;
+  color: white;
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.open-btn:hover {
+  background: #1d4ed8;
+}
+
+/* ==========================
+   Empty State
+========================== */
+
+.empty-state {
+  background: white;
+  text-align: center;
+  padding: 70px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
+
+.empty-state h2 {
+  color: #1e3a8a;
+  margin-bottom: 15px;
+}
+
+.empty-state p {
+  color: #666;
+  font-size: 16px;
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+  .subject-header h1 {
+    font-size: 2rem;
+  }
+
+  .lesson-meta {
+    flex-direction: column;
+  }
+
+  .open-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

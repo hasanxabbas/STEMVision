@@ -2,12 +2,14 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContextValue'
 import { ROUTES, USER_ROLES } from '../config/constant'
+import Landing from '../pages/Landing/Landing'
 
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'
 
 import StudentHome from '../pages/student/Home'
 import StudentSubjects from '../pages/student/Subjects'
+import SubjectDetails from '../pages/student/SubjectDetails'
 import StudentHistory from '../pages/student/History'
 import StudentProfile from '../pages/student/Profile'
 
@@ -22,7 +24,7 @@ import Quiz from '../pages/ai/Quiz'
 import ProtectedRoute from './ProtectedRoute'
 
 const AppRoutes = () => {
-  const { token } = useContext(AuthContext)
+  const { token, user } = useContext(AuthContext)
 
   return (
     <Routes>
@@ -46,7 +48,16 @@ const AppRoutes = () => {
             <StudentSubjects />
           </ProtectedRoute>
         }
-      />
+/>
+        <Route
+  path={ROUTES.STUDENT_SUBJECT_DETAILS}
+  element={
+    <ProtectedRoute allowedRoles={[USER_ROLES.STUDENT]}>
+      <SubjectDetails />
+    </ProtectedRoute>
+  }
+/>
+      
       <Route
         path={ROUTES.STUDENT_HISTORY}
         element={
@@ -117,16 +128,23 @@ const AppRoutes = () => {
       />
 
       {/* Default Route */}
-      <Route
-        path="/"
-        element={
-          token ? (
-            <Navigate to={ROUTES.STUDENT_HOME} replace />
-          ) : (
-            <Navigate to={ROUTES.LOGIN} replace />
-          )
+<Route
+  path="/"
+  element={
+    token ? (
+      <Navigate
+        to={
+          user?.role?.toLowerCase() === "teacher"
+            ? ROUTES.TEACHER_DASHBOARD
+            : ROUTES.STUDENT_HOME
         }
+        replace
       />
+    ) : (
+      <Landing />
+    )
+  }
+/>
 
       {/* Catch all */}
       <Route path="*" element={<Navigate to="/" replace />} />

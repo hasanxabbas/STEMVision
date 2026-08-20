@@ -2,7 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContextValue'
 import { ROUTES, USER_ROLES } from '../config/constant'
-import Landing from '../pages/Landing/Landing'
+import Landing from '../pages/landing/Landing'
 
 import Login from '../pages/auth/Login'
 import Register from '../pages/auth/Register'

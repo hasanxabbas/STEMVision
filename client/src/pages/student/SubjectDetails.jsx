@@ -2,6 +2,7 @@ import "./SubjectDetails.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { lessonService } from "../../services/lesson.service";
+import { learningHistoryService } from "../../services/learningHistory.service";
 
 const SubjectDetails = () => {
   const { id } = useParams();
@@ -19,8 +20,22 @@ const SubjectDetails = () => {
       setLoading(true);
 
       const response = await lessonService.getAll(id);
+      const fetchedLessons = response.data || [];
+      setLessons(fetchedLessons);
 
-      setLessons(response.data || []);
+      // Log lesson viewed event
+      if (fetchedLessons.length > 0) {
+        try {
+          await learningHistoryService.logActivity({
+            activityType: "lesson",
+            title: `Lesson Materials Viewed: ${fetchedLessons[0].subject?.name || 'Subject'}`,
+            subjectId: id,
+            lessonId: fetchedLessons[0]._id,
+          });
+        } catch (logErr) {
+          console.error("Error logging lesson view:", logErr);
+        }
+      }
     } catch (err) {
       console.error(err);
     } finally {
@@ -107,6 +122,21 @@ const SubjectDetails = () => {
                   href={`http://localhost:5000${lesson.fileUrl}`}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={async () => {
+                    try {
+                      await learningHistoryService.logActivity({
+                        activityType: "summary",
+                        title: `Summary Session: ${lesson.title}`,
+                        subjectId: id,
+                        lessonId: lesson._id,
+                        details: {
+                          fileUrl: lesson.fileUrl,
+                        }
+                      });
+                    } catch (logErr) {
+                      console.error("Error logging PDF session:", logErr);
+                    }
+                  }}
                 >
                   📄 View Study Material
                 </a>

@@ -1,29 +1,38 @@
 .table-wrapper {
   overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+  margin-top: 24px;
 }
 
 .lesson-table {
   width: 100%;
   border-collapse: collapse;
   background-color: var(--bg-secondary);
-  border-radius: 8px;
-  overflow: hidden;
 }
 
 .lesson-table thead {
-  background-color: var(--primary-color);
-  color: white;
+  background-color: var(--bg-tertiary);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-color);
 }
 
 .lesson-table th {
-  padding: var(--spacing-md);
+  padding: 16px 20px;
   text-align: left;
-  font-weight: var(--font-weight-bold);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  color: var(--text-color);
 }
 
 .lesson-table td {
-  padding: var(--spacing-md);
+  padding: 16px 20px;
   border-bottom: 1px solid var(--border-color);
+  font-size: var(--font-size-sm);
+  color: var(--text-light);
+  font-weight: 500;
 }
 
 .lesson-table tbody tr:hover {
@@ -36,36 +45,53 @@
 
 .actions {
   display: flex;
-  gap: var(--spacing-md);
+  gap: 8px;
 }
 
 .edit-btn,
 .delete-btn {
-  background: none;
-  border: none;
-  font-size: 1.2rem;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  font-family: var(--font-family);
+  font-weight: 600;
   cursor: pointer;
-  transition: transform 0.3s ease;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
 }
 
-.edit-btn:hover,
+.edit-btn {
+  background-color: var(--bg-tertiary);
+  color: var(--text-color);
+  border-color: var(--border-color);
+}
+
+.edit-btn:hover {
+  background-color: var(--hover-bg);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.delete-btn {
+  background-color: rgba(220, 38, 38, 0.08);
+  color: var(--danger-color);
+}
+
 .delete-btn:hover {
-  transform: scale(1.2);
+  background-color: var(--danger-color);
+  color: #ffffff;
 }
 
 .no-data {
   text-align: center;
-  padding: var(--spacing-lg);
-  color: var(--text-light);
+  padding: 32px;
+  color: var(--text-lighter);
+  font-weight: 500;
 }
 
 @media (max-width: 768px) {
-  .lesson-table {
-    font-size: var(--font-size-sm);
-  }
-
   .lesson-table th,
   .lesson-table td {
-    padding: var(--spacing-sm);
+    padding: 12px;
   }
 }

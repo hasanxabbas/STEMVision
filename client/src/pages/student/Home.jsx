@@ -78,6 +78,12 @@ window.speechSynthesis.cancel()
   )
 }, [latestLesson])
 
+  useEffect(() => {
+    return () => {
+      recognitionRef.current?.stop()
+    }
+  }, [])
+
   const startListening = () => {
     if (
       !('webkitSpeechRecognition' in window) &&
@@ -101,6 +107,11 @@ window.speechSynthesis.cancel()
 
     recognition.onend = () => setIsListening(false)
 
+    recognition.onerror = (event) => {
+      console.error('Speech recognition error:', event.error)
+      setIsListening(false)
+    }
+
     recognition.onresult = (event) => {
       const transcript =
         event.results[0][0].transcript.trim()
@@ -115,7 +126,12 @@ window.speechSynthesis.cancel()
     }
 
     recognitionRef.current = recognition
-    recognition.start()
+    try {
+      recognition.start()
+    } catch (err) {
+      console.error('Failed to start speech recognition:', err)
+      setIsListening(false)
+    }
   }
 
   const stopListening = () => {

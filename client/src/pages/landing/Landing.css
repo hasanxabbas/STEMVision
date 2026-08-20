@@ -3,97 +3,105 @@
   display: flex;
   justify-content: center;
   align-items: center;
-
-  background: linear-gradient(
-    135deg,
-    #3b82f6,
-    #2563eb,
-    #1d4ed8
-  );
-
-  padding: 20px;
+  background: radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.12), transparent 45%), 
+              radial-gradient(circle at 15% 80%, rgba(14, 165, 233, 0.08), transparent 45%), 
+              #090d16;
+  padding: 24px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 .landing-card {
   width: 100%;
-  max-width: 500px;
-
-  background: rgba(255, 255, 255, 0.12);
-
-  backdrop-filter: blur(18px);
-
+  max-width: 480px;
+  background: #111827;
+  border: 1px solid #1f2937;
   border-radius: 24px;
-
-  padding: 50px;
-
+  padding: 48px;
   text-align: center;
-
-  color: white;
-
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6);
 }
 
 .landing-card h1 {
-  font-size: 3rem;
-  margin-bottom: 10px;
-  font-weight: 700;
+  font-family: 'Outfit', sans-serif;
+  font-size: 3.25rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+  letter-spacing: -0.03em;
+  background: linear-gradient(135deg, #ffffff 40%, #c7d2fe 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .subtitle {
-  font-size: 1.1rem;
-  opacity: 0.9;
-  margin-bottom: 35px;
+  font-size: 1.15rem;
+  color: #94a3b8;
+  font-weight: 500;
+  margin-bottom: 40px;
 }
 
 .landing-card h2 {
-  margin-bottom: 30px;
-  font-weight: 500;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
 }
 
 .role-btn {
   width: 100%;
-
-  padding: 20px;
-
-  margin-bottom: 18px;
-
-  border: none;
-
-  border-radius: 16px;
-
-  font-size: 1.2rem;
-
+  padding: 16px 24px;
+  margin-bottom: 16px;
+  border-radius: 14px;
+  font-size: 1.1rem;
   font-weight: 600;
-
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  transition: all 0.25s ease;
+.role-btn:last-of-type {
+  margin-bottom: 0;
 }
 
 .student {
-  background: white;
-  color: #2563eb;
+  background: #ffffff;
+  color: #0f172a;
+  border: 1px solid #e2e8f0;
+}
+
+.student:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(255, 255, 255, 0.1);
 }
 
 .teacher {
-  background: #0f172a;
-  color: white;
+  background: #1f2937;
+  color: #ffffff;
+  border: 1px solid #374151;
 }
 
-.role-btn:hover {
-  transform: translateY(-4px);
+.teacher:hover {
+  background: #374151;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.3);
+}
 
-  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+.role-btn:focus-visible {
+  outline: 3px solid #6366f1;
+  outline-offset: 3px;
 }
 
 @media (max-width: 600px) {
-
   .landing-card {
-    padding: 30px;
+    padding: 32px 24px;
   }
 
   .landing-card h1 {
-    font-size: 2.3rem;
+    font-size: 2.5rem;
   }
-
 }

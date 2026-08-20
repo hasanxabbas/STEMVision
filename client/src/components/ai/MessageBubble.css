@@ -1,8 +1,8 @@
 .message-bubble {
   display: flex;
   flex-direction: column;
-  margin: var(--spacing-md) 0;
-  max-width: 70%;
+  margin: var(--spacing-sm) 0;
+  max-width: 75%;
 }
 
 .message-bubble.user {
@@ -17,31 +17,72 @@
 
 .message-content {
   background-color: var(--primary-color);
-  color: white;
-  padding: var(--spacing-md);
-  border-radius: 12px;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 16px 16px 4px 16px;
   word-wrap: break-word;
+  font-size: 0.95rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.message-bubble.user .message-content,
+.message-bubble.user .message-content * {
+  color: #ffffff;
 }
 
 .message-bubble.ai .message-content {
   background-color: var(--bg-secondary);
   color: var(--text-color);
   border: 1px solid var(--border-color);
+  border-radius: 16px 16px 16px 4px;
 }
 
 .message-content p {
-  margin: 0;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.message-content p:last-child {
+  margin-bottom: 0;
 }
 
 .message-content img {
   max-width: 100%;
   margin-top: var(--spacing-sm);
   border-radius: 8px;
+  border: 1px solid var(--border-color);
 }
 
 .message-time {
+  font-size: 0.7rem;
+  color: var(--text-lighter);
+  margin-top: 4px;
+  padding: 0 4px;
+  font-weight: 500;
+}
+
+.message-bubble.user .message-time {
+  text-align: right;
+}
+
+/* Talkback button styling */
+.talkback-btn {
+  margin-top: 8px;
+  border: none;
+  background: var(--bg-tertiary);
+  color: var(--text-color);
+  padding: 6px 12px;
+  border-radius: 6px;
   font-size: 0.75rem;
-  color: var(--text-light);
-  margin-top: 0.25rem;
-  padding: 0 var(--spacing-sm);
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--border-color);
+  transition: all 0.2s ease;
+}
+
+.talkback-btn:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
 }

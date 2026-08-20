@@ -4,12 +4,13 @@
   right: -420px;
   width: 400px;
   height: 100vh;
-  background: #111827;
-  border-left: 1px solid #2d3748;
-  padding: 25px;
-  transition: right 0.35s ease;
-  z-index: 1000;
+  background: var(--bg-secondary);
+  border-left: 1px solid var(--border-color);
+  padding: 32px 24px;
+  transition: right 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1010;
   overflow-y: auto;
+  box-shadow: var(--shadow-lg);
 }
 
 .accessibility-panel.open {
@@ -20,49 +21,123 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 
 .panel-header h2 {
-  color: white;
-  font-size: 24px;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 700;
 }
 
 .panel-header button {
   background: transparent;
   border: none;
-  color: white;
-  font-size: 28px;
+  color: var(--text-lighter);
+  font-size: 24px;
   cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.panel-header button:hover {
+  background: var(--hover-bg);
+  color: var(--text-color);
 }
 
 .setting {
-  margin-bottom: 25px;
+  margin-bottom: 28px;
 }
 
 .setting label {
   display: block;
-  color: white;
-  margin-bottom: 10px;
+  color: var(--text-color);
+  margin-bottom: 8px;
   font-weight: 600;
+  font-size: var(--font-size-sm);
 }
 
 .setting select,
 .setting input[type="range"],
 .setting button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  transition: all 0.2s ease;
 }
 
-.setting select,
+.setting select {
+  background: var(--bg-tertiary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  outline: none;
+  cursor: pointer;
+}
+
+.setting select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+}
+
 .setting button {
-  background: #1f2937;
-  color: white;
+  background: var(--bg-tertiary);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.setting button:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+}
+
+/* Custom styled range input */
+.setting input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--border-color);
   border: none;
+  padding: 0;
+  outline: none;
+  margin: 12px 0 6px 0;
+}
+
+.setting input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--primary-color);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+}
+
+.setting input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
 }
 
 .setting p {
-  color: #60a5fa;
-  margin-top: 8px;
+  color: var(--primary-color);
+  margin-top: 4px;
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+}
+
+@media (max-width: 450px) {
+  .accessibility-panel {
+    width: 100%;
+    right: -100%;
+  }
 }

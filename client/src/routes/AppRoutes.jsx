@@ -69,7 +69,7 @@ const AppRoutes = () => {
       <Route
         path={ROUTES.STUDENT_PROFILE}
         element={
-          <ProtectedRoute allowedRoles={[USER_ROLES.STUDENT]}>
+          <ProtectedRoute allowedRoles={[USER_ROLES.STUDENT, USER_ROLES.TEACHER]}>
             <StudentProfile />
           </ProtectedRoute>
         }

@@ -2,21 +2,25 @@ import api from './api'
 import { ENDPOINTS } from '../config/constant'
 
 export const aiService = {
-  chat: async (message, lessonId = null) => {
+  chat: async (message, lessonId = null, chatHistoryId = null) => {
     const response = await api.post(ENDPOINTS.AI_CHAT, {
       message,
       lessonId,
+      chatHistoryId,
     })
 
     return response.data
   },
 
-  explainDiagram: async (imageFile, context = null) => {
+  explainDiagram: async (imageFile, context = null, chatHistoryId = null) => {
     const formData = new FormData()
     formData.append('image', imageFile)
 
     if (context) {
       formData.append('context', context)
+    }
+    if (chatHistoryId) {
+      formData.append('chatHistoryId', chatHistoryId)
     }
 
     const response = await api.post(

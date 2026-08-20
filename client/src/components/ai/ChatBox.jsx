@@ -11,22 +11,27 @@ const ChatBox = ({
   initialImage = null,
   autoListen = false,
   lessonLoaded = false,
+  initialMessages = [],
 }) => {
   const { speak } = useContext(AccessibilityContext)
 
   const [messages, setMessages] = useState([])
   useEffect(() => {
-  if (!lessonLoaded) return
-
-  setMessages([
-    {
-      sender: "ai",
-      text:
-        "👋 Hello! I'm your STEMVision AI Tutor.\n\nI'm ready to help you understand this lesson.\n\n🎤 Ask using your voice\n⌨️ Type any question\n📖 Ask for summaries, formulas, explanations or viva questions.",
-      timestamp: new Date(),
-    },
-  ])
-}, [lessonLoaded])
+    if (initialMessages && initialMessages.length > 0) {
+      setMessages(initialMessages)
+    } else if (lessonLoaded) {
+      setMessages([
+        {
+          sender: "ai",
+          text:
+            "👋 Hello! I'm your STEMVision AI Tutor.\n\nI'm ready to help you understand this lesson.\n\n🎤 Ask using your voice\n⌨️ Type any question\n📖 Ask for summaries, formulas, explanations or viva questions.",
+          timestamp: new Date(),
+        },
+      ])
+    } else {
+      setMessages([])
+    }
+  }, [initialMessages, lessonLoaded])
   const [input, setInput] = useState('')
   const [isSending, setIsSending] = useState(false)
   const [selectedImage, setSelectedImage] = useState(null)

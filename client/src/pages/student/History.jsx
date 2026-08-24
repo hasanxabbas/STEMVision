@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Loader from '../../components/common/Loader'
 import { learningHistoryService } from '../../services/learningHistory.service'
-import { BACKEND_URL } from '../../config/constant'
+import { getAssetUrl } from '../../config/constant'
 import { toList } from '../../utils/apiData'
 import './Student.css'
 
@@ -54,7 +54,7 @@ const History = () => {
         navigate(`/student/subjects/${subjectId}`)
       }
     } else if (item.details?.fileUrl) {
-      window.open(`${BACKEND_URL}${item.details.fileUrl}`, '_blank')
+      window.open(getAssetUrl(item.details.fileUrl), '_blank')
     }
   }
 

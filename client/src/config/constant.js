@@ -7,6 +7,14 @@ export { API_BASE_URL }
 export const BACKEND_URL =
   API_BASE_URL.replace(/\/api\/?$/, '')
 
+export const getAssetUrl = (path) => {
+  if (!path) return "";
+  if (/^https?:\/\//i.test(path)) {
+    return path;
+  }
+  return `${BACKEND_URL}${path.startsWith("/") ? path : `/${path}`}`;
+};
+
 
 export const ENDPOINTS = {
   // Auth

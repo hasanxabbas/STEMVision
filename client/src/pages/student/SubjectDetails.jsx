@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { lessonService } from "../../services/lesson.service";
 import { learningHistoryService } from "../../services/learningHistory.service";
+import { BACKEND_URL } from "../../config/constant";
 
 const SubjectDetails = () => {
   const { id } = useParams();
@@ -119,7 +120,7 @@ const SubjectDetails = () => {
               {lesson.fileUrl && (
                 <a
                   className="open-btn"
-                  href={`http://localhost:5000${lesson.fileUrl}`}
+                  href={`${BACKEND_URL}${lesson.fileUrl}`}
                   target="_blank"
                   rel="noreferrer"
                   onClick={async () => {

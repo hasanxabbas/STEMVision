@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import ChatBox from '../../components/ai/ChatBox'
 import { aiService } from '../../services/ai.service'
+import { BACKEND_URL } from '../../config/constant'
 import { learningHistoryService } from '../../services/learningHistory.service'
 import Loader from '../../components/common/Loader'
 import './AI.css'
@@ -75,7 +76,7 @@ const AITutor = () => {
         const formatted = (res.data.messages || []).map(m => ({
           sender: m.sender,
           text: m.text,
-          image: m.image ? `http://localhost:5000${m.image}` : null,
+          image: m.image ? `${BACKEND_URL}${m.image}` : null,
           timestamp: new Date(m.createdAt),
         }))
         setInitialMessages(formatted)

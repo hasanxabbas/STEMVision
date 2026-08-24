@@ -1,9 +1,11 @@
-const DEFAULT_API_URL = import.meta.env.PROD
+const API_BASE_URL = import.meta.env.PROD
   ? 'https://stemvision-api.onrender.com/api'
-  : 'http://localhost:5000/api'
+  : (import.meta.env.VITE_API_URL || 'http://localhost:5000/api')
 
-export const API_BASE_URL = import.meta.env.VITE_API_URL || DEFAULT_API_URL
-export const BACKEND_URL = API_BASE_URL.replace(/\/api\/?$/, '')
+export { API_BASE_URL }
+
+export const BACKEND_URL =
+  API_BASE_URL.replace(/\/api\/?$/, '')
 
 
 export const ENDPOINTS = {
